@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{manager/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="container mt-5">
+		<div class="card text-center">
+			<div class="card-header primary-bg text-white">
+				Book
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6">
+						<img th:src="${book.bookImageUrl}" alt="image" class="img-fluid rounded-circle" style="max-height: 200px;">
+					</div>
+					<div class="col-md-6">
+						<table class="table">
+							<tbody>
+							<tr>
+								<th scope="row" style="font-size:16px; font-weight: bold;">Book-Id :</th>
+								<td th:text="${book.bookId}" style="font-size:16px;">/td>
+							</tr>
+							<tr>
+								<th scope="row" style="font-size:16px; font-weight: bold;">Book Title :</th>
+								<td th:text="${book.bookTitle}" style="font-size:16px;">/td>
+							</tr>
+							<tr>
+								<th scope="row" style="font-size:16px;font-width:30px; font-weight: bold;">Book Author :</th>
+								<td th:text="${book.bookAuthor}" style="font-size:16px;font-width:30px">/td>
+							
+							</tr>
+							<tr>
+								<th scope="row" style="font-size:16px;font-width:30px; font-weight: bold;">Book ISBN :</th>
+								<td th:text="${book.bookISBN}" style="font-size:16px;font-width:30px">/td>
+							
+							</tr>
+							<tr>
+								<th scope="row" style="font-size:16px;font-width:30px; font-weight: bold;">Book Status :</th>
+								<td th:text="${book.bookStatus}" style="font-size:16px;font-width:30px">/td>
+							
+							</tr>
+							
+							<tr>
+								<th scope="row" style="font-size:16px;font-width:30px; font-weight: bold;">Book Price :</th>
+								<td th:text="${book.bookPrice}" style="font-size:16px;font-width:30px">/td>
+							
+							</tr>
+							
+							
+							<tr>
+								<th scope="row" style="font-size:16px;font-width:30px; font-weight: bold;">Book Quantity:</th>
+								<td th:text="${book.bookQuantity}" style="font-size:16px;font-width:30px">/td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div th:text="${book.discription}" style="font-size:16px;"></div>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-md-12">
+						<button type="button" class="btn btn-outline-info btn-circle btn-sm btn-circle ml-2 delete-book" id="delete-book" th:data-book_id="${book.bookId}">
+							<i class="fa fa-trash fa-2x"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

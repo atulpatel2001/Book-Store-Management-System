@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{staff/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+
+<section>
+	
+	<!-- Dashboard -->
+	<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+		
+		<!-- Main content -->
+		<div class="h-screen flex-grow-1 overflow-y-lg-auto">
+			
+			
+			<!-- Main -->
+			<main class="py-6 bg-surface-secondary">
+				<div class="container-fluid">
+					<!-- Card stats -->
+					<div class="row g-6 mb-6">
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Order</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOrder}">$750.90</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+												<i class="fas fa-shipping-fast"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Pending Order</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfPendingOrder}">215</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+												<i class="fas fa-shipping-fast"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Delivered Order</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfDeliveredOrder}">1.400</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+												<i class="bi bi-clock-history"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                  
+                                  </span>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Experience</span>
+											<span class="h3 font-bold mb-0"> 3 Year</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
+												<i class="fas fa-cube"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						
+					</div>
+					<div class="card shadow border-0 mb-7">
+						<div class="card-header">
+							<h5 class="mb-0">Today Delivery Order</h5>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-hover table-nowrap">
+								<thead class="thead-light">
+								<tr><th></th>
+									<th scope="col">Order Request No</th>
+									<th scope="col">Book Title</th>
+									<th scope="col">Order Status</th>
+								</tr>
+								</thead>
+								<tbody th:if="${orders != null}">
+								<tr th:each="order:${orders}">
+									<td>
+                                      <span class="badge badge-lg badge-dot">
+                                          <i class="bg-success"></i>
+                                      </span>
+									</td>
+									<td th:text="${order.orderId}">
+         
+									</td>
+									<td>
+										<div class="widget-content p-0">
+											<div class="widget-content-wrapper">
+												<div class="widget-content-left mr-3">
+													<div class="widget-content-left">
+														<img width="40" class="rounded-circle" th:src="${order.book.bookImageUrl}" alt="">
+													</div>
+												</div>
+												<div class="widget-content-left flex2">
+													<div class="widget-heading" th:text="${order.book.bookTitle}"></div>
+													<div class="widget-subheading opacity-7" th:text="${order.book.bookAuthor}">Web Developer</div>
+												</div>
+											</div>
+										</div>
+									</td>
+									<td th:text="${order.orderStatus}">
+									
+									</td>
+									
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
+			</main>
+		</div>
+</section>
+
+
+</body>
+</html>

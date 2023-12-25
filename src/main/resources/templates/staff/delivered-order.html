@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{staff/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	<div>
+		<div class="maina mt-5">
+		<h2 class="text-center">Delivered Order</h2>
+		<div class="carda">
+			<div class="card-body"  th:if="${orders != null}">
+				
+				
+				<div class="card shadow-0 border mb-4" style="margin-right:50px;font-size:19px;" th:each="order:${orders}">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-2">
+								<a th:href="@{'/staff/'+${order.orderId}+'/order-detail'}" >
+									<img th:src="${order.book.bookImageUrl}" style="height:80px;width:80px;"
+										 class="img-fluid" alt="Phone"></a>
+							</div>
+							
+							<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+								<p class="text-muted mb-0" th:text="${order.book.bookTitle}">Samsung Galaxy</p>
+							</div>
+							
+							<div class="col-md-2 text-center d-flex align-items-center">
+								<p class="text-muted mb-0 small" th:text="${order.orderId}">White</p>
+							</div>
+							
+							<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+								<p class="text-muted mb-0 small" th:text="${order.book.bookAuthor}">Capacity: 64GB</p>
+							</div>
+							
+							<div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+								<p class="text-muted mb-0 small" th:text="'Qty: '+${order.bookQuantity}" >Qty: 1</p>
+							</div>
+							
+							<div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+								<p class="text-muted mb-0 small" th:text="'$'+${order.transaction.amount}">$499</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<nav aria-label="Page navigation example" th:if="${totalPages>0}" style="color:black">
+					<ul class="pagination">
+						<li class="page-item border" th:if="${currentPage != 0 }">
+							<a class="page-link" href="#" aria-label="Previous"
+							   th:href="@{'/staff/delivered-order-detail/' + ${currentPage - 1}}">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}" style="color:black"
+							th:classappend="${currentPage == i-1 ? 'active' : ''}"><a
+								class="page-link" href="#" th:href="@{'/staff/delivered-order-detail/' + ${i-1}}"
+								th:text="${i}">1</a></li>
+						
+						<li class="page-item  border" th:if="${currentPage + 1 != totalPages}" style="color:black">
+							<a class="page-link" href="#" aria-label="Next"
+							   th:href="@{'/staff/delivered-order-detail/' + ${currentPage + 1}}">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			
+			
+			
+			</div>
+		</div>
+	</div>
+	</div>
+</section>
+
+</body>
+</html>

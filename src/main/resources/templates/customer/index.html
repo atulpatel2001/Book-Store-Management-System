@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{customer/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	
+	<!--	new book-->
+	<div class="m-4">
+	<div class="new-book" th:if="${newBook != null and not #lists.isEmpty(newBook)}">
+		
+		<h1 class="title-shop m-3" id="title">NEW PUBLISH</h1>
+		<main class="main bd-grid">
+			
+			<article class="card1" th:each="book:${newBook}" style="width:255px;height:400px;">
+				<div class="card1__img">
+					<img th:src="${book.bookImageUrl}" class="img1" alt="" style="height:225px;">
+				</div>
+				<div class="card1__name">
+					<p th:text="${book.bookAuthor}">AIR ZOOM PEGASUS</p>
+				</div>
+				<div class="card1__precis ">
+					<a  class="card1__icon ml-3" th:href="@{'/purchase-book/'+${book.bookId}+'/book-detail'}">
+						<i class="fa fa-eye"></i>
+					</a>
+					
+					<div>
+						<span class="card1__preci card1__preci--before" th:text="${book.bookTitle}">$990.00</span>
+						<span class="card1__preci card1__preci--now" th:text="'$'+${book.bookPrice}">$749.00</span>
+					</div>
+					<a  class="card1__icon mr-3 add-cart" style=" cursor: pointer;"  th:data-book_id="${book.bookId}">
+						<ion-icon name="cart-outline"></ion-icon>
+					</a>
+				
+				
+				</div>
+			
+			</article>
+		
+		
+		</main>
+		<footer class="m-3">
+			<div class="gap-2">
+				<a class="btn btn-outline-dark" th:href="@{/purchase-book/all-product}">Read More</a>
+			</div>
+		</footer>
+	
+	
+	</div>
+	
+	<!--	    best seller-->
+	<div class="best-seller-book" th:if="${bestSellerBook != null and not #lists.isEmpty(bestSellerBook)}">
+		
+		<h1 class="title-shop mt-2" id="title"> BEST SELLERS </h1>
+		<main class="main bd-grid">
+			
+			<article class="card1" th:each="book:${bestSellerBook}" style="width:255px;height:400px;">
+				<div class="card1__img">
+					<img th:src="${book.bookImageUrl}" class="img1" alt="" style="height:225px;">
+				</div>
+				<div class="card1__name">
+					<p th:text="${book.bookAuthor}">AIR ZOOM PEGASUS</p>
+				</div>
+				<div class="card1__precis">
+					<a href="" class="card1__icon ml-3" th:href="@{'/purchase-book/'+${book.bookId}+'/book-detail'}">
+						<i class="fa fa-eye"></i>
+					</a>
+					
+					<div>
+						<span class="card1__preci card1__preci--before" th:text="${book.bookTitle}">$990.00</span>
+						<span class="card1__preci card1__preci--now" th:text="'$'+${book.bookPrice}">$749.00</span>
+					</div>
+					<a  class="card1__icon mr-3 add-cart" style=" cursor: pointer;" id="add-cart" th:data-book_id="${book.bookId}">
+						<ion-icon name="cart-outline"></ion-icon>
+					</a>
+				
+				</div>
+			</article>
+		
+		
+		</main>
+		<footer class="m-3">
+			<div class="gap-2">
+				<a class="btn btn-outline-dark" th:href="@{/purchase-book/all-product}">Read More</a>
+			</div>
+		</footer>
+	
+	
+	</div>
+	<!--	old book-->
+	
+	<div class="old-book" th:if="${oldBook != null and not #lists.isEmpty(oldBook)}">
+		
+		<h1 class="title-shop mt-2" id="title">OLD BOOKS</h1>
+		<main class="main bd-grid">
+			
+			<article class="card1" th:each="book:${oldBook}" style="width:255px;height:400px;">
+				<div class="card1__img">
+					<img th:src="${book.bookImageUrl}" class="img1" alt="" style="height:225px;">
+				</div>
+				<div class="card1__name">
+					<p th:text="${book.bookAuthor}">AIR ZOOM PEGASUS</p>
+				</div>
+				<div class="card1__precis">
+					<a href="" class="card1__icon ml-3" th:href="@{'/purchase-book/'+${book.bookId}+'/book-detail'}">
+						<i class="fa fa-eye"></i>
+					</a>
+					
+					<div>
+						<span class="card1__preci card1__preci--before" th:text="${book.bookTitle}">$990.00</span>
+						<span class="card1__preci card1__preci--now" th:text="${'$'+book.bookPrice}">$749.00</span>
+					</div>
+					<a  class="card1__icon mr-3 add-cart" style=" cursor: pointer;"  th:data-book_id="${book.bookId}">
+						<ion-icon name="cart-outline"></ion-icon>
+					</a>
+				
+				</div>
+			</article>
+		
+		
+		</main>
+		<footer class="m-3">
+			
+			<div class="gap-2">
+				<a class="btn btn-outline-dark" th:href="@{/purchase-book/all-product}">Read More</a>
+			</div>
+		</footer>
+	
+	
+	</div>
+	
+	</div>
+</section>
+
+</body>
+</html>

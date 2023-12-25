@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{staff/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="container " style="margin-top:70px;">
+		<div class="card text-center ">
+			<div class="card-header primary-bg " style="color:white">
+				Book
+			</div>
+			<div class="card-body">
+				<table class="table">
+					
+					<tbody>
+					<img th:src="${book.bookImageUrl}" alt="image" style="height:200px;border-radius: 50%"/>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book-Id :</th>
+						<td th:text="${book.bookId}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Title :</th>
+						<td th:text="${book.bookTitle}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Author :</th>
+						<td th:text="${book.bookAuthor}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book ISBN :</th>
+						<td th:text="${book.bookISBN}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Status :</th>
+						<td th:text="${book.bookStatus}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Price :</th>
+						<td th:text="${book.bookPrice}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Quantity:</th>
+						<td th:text="${book.bookQuantity}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Discription:</th>
+						<td ><p th:text="${book.discription}" style="font-size:16px;font-width:30px"></p></td>
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book AddDate:</th>
+						<td th:text="${book.bookAddDate}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book Genre:</th>
+						<td th:text="${book.category.categoryTitle}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+</html>

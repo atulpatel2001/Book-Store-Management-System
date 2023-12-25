@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	
+	<h1 class="text-center">Order Details</h1>
+	<div class="maina">
+		
+		<div class="carda">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-3" style="font-size:15px">
+						<p style="font-size:17px">Delivery Address</p>
+						<p th:text="${order.customer.address.fullName}"></p>
+						<p th:text="${order.customer.address.phoneNumber}"></p>
+						<p th:text="${order.customer.address.state}"></p>
+						<p th:text="${order.customer.address.district}"></p>
+					
+					</div>
+					<div class="col-md-3 " style="font-size:15px">
+						<p></p>
+						<p th:text="${order.customer.address.city}"></p>
+						
+						<p th:text="${order.customer.address.pinCode}"></p>
+						<p th:text="${order.customer.address.houseNo}"></p>
+						<p th:text="${order.customer.address.buildingName}"></p>
+						<p th:text="${order.customer.address.area}"></p>
+						<p th:text="${order.customer.address.colony}"></p>
+					</div>
+					
+					<div class="col-md-2" style="font-size:15px">
+						<p>Tracation Detail</p>
+						<p th:text="${order.transaction.transcationStatus}"></p>
+						<p th:text="${order.transaction.amount}"></p>
+						<p th:text="${order.transaction.transcationdate}"></p>
+						<p th:text="${order.transaction.paymentId}"></p>
+					</div>
+					<div class="col-md-2" style="font-size:15px">
+						<span><i class="fas fa-book-open m-2"></i >BookDetail</span><br>
+						<span th:if="${order.hasEmployee()}"><i class="fa fa-user m-1"></i >Assign Staff Detail</span>
+					</div>
+					
+					<div class="col-md-2" style="font-size:15px">
+						<a th:href="@{'/admin/'+${order.book.bookId}+'/book-Info'}"> Click Hear.. </a><br>
+						<a th:if="${order.hasEmployee()}" th:href="@{'/admin/'+${order.employee.employeeId}+'/manager-info'}">Click Hear..</a>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="carda">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-1" style="font-size:15px">
+						<img th:src="${order.book.bookImageUrl}" style="height:70px;width:70px;">
+					
+					</div>
+					<div class="col-md-2" style="font-size:15px">
+						<p th:text="${order.book.bookTitle}"></p>
+						<p style="font-size:12px;" class="text-mute" th:text="${order.orderId}"></p>
+						
+						<p style="font-size:12px;" class="text-mute" th:text="${order.book.bookAuthor}"></p>
+						<p style="font-size:12px;" th:text="'Qty: '+${order.bookQuantity}"></p>
+						<p style="font-size:12px;" th:text="'$'+${order.transaction.amount}"></p>
+					
+					</div>
+					<div class="col-md-6 mt-5">
+						
+						<!--						start pogress bar-->
+						<div class="wrapper">
+							<div class="margin-area">
+								<div class="dot one">1</div>
+								<div class="dot two" th:style="${order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">2</div>
+								<div class="dot three" th:style="${order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">3</div>
+								<div class="dot four" th:style="${order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">4</div>
+								
+								<div class="progress-bar first" th:style="${order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''"></div>
+								<div class="progress-bar second" th:style="${order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''"></div>
+								<div class="progress-bar third" th:style="${order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''" ></div>
+								<div class="message message-1">
+									Order Confirmed <span th:text="${order.orderDate}"></span>
+									<div>
+										<div class="message message-2" >Shipped <span th:text="${order.shippedDate}"></span><div>
+											<div class="message message-3">Out For Delivery   <span th:text="${order.outOfDeliveryDate}"></span><div><div>
+												<div class="message message-4">
+													Delivered   <span th:text="${order.deliveredDate}"></span><div>
+												
+												</div>
+												
+												</div>
+												
+												
+												<!--						end pogress bar-->
+												
+											</div>
+											
+											
+											</div>
+											</div>
+										</div>
+										</div>
+										
+										
+
+</section>
+</body>
+</html>

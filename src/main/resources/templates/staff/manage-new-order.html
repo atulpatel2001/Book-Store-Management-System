@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{staff/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<section>
+	
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="main-card mb-3 card">
+				<div class="card-header">New Order
+					<div class="btn-actions-pane-right">
+						<div role="group" class="btn-group-sm btn-group">
+							<div class="container text-center loader" style="display:none;">
+								<span class="fa fa-refresh fa-spin fa-4x" ></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="table-responsive" th:if="${orders != null}">
+					<table class="align-middle mb-0 table table-borderless table-striped table-hover">
+						<thead>
+						<tr>
+							<th class="text-center">Order Request No</th>
+							<th>Name</th>
+							<th class="text-center">Status</th>
+							<th class="text-center">Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="order:${orders}">
+							<td class="text-center text-muted" th:text="${order.orderId}">#345</td>
+							<td>
+								<div class="widget-content p-0">
+									<div class="widget-content-wrapper">
+										<div class="widget-content-left mr-3">
+											<div class="widget-content-left">
+												<img width="40" class="rounded-circle" th:src="${order.book.bookImageUrl}" alt="">
+											</div>
+										</div>
+										<div class="widget-content-left flex2">
+											<div class="widget-heading" th:text="${order.book.bookTitle}"></div>
+											<div class="widget-subheading opacity-7" th:text="${order.book.bookAuthor}">Web Developer</div>
+										</div>
+									</div>
+								</div>
+							</td>
+							<td class="text-center">
+								<div th:class="'wait-'+${order.orderId}" style="display:none;"><h6>Please Wait...</h6></div>
+									<button type="button" class="btn btn-success open-otp-form" th:data-email-id="${order.customer.customerEmailId}" th:data-order-id="${order.orderId}" th:text="${order.orderStatus}"></button>
+								<div th:class="'otp-form-'+${order.orderId}"  style="display:none;">
+									
+									<form th:action="@{/staff/veryfie-otp-deliverd-order}" method="post">
+									<input type="hidden" th:value="${order.orderId}" name="orderId">
+										
+										
+										<div class="input-group mb-3 input-group-sm " style="margin-top:5px;">
+											<input type="number" class="form-control btn-sm ml-2" placeholder="Enter Otp" aria-label="Username" name="otp">
+											<button type="submit" class="form-control btn btn-success btn-sm" >VeryFie</button>
+										</div>
+										
+										
+										
+								</form>
+								
+								</div>
+								
+							</td>
+							<td class="text-center">
+								<a th:href="@{'/staff/'+${order.orderId}+'/order-detail'}" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</a>
+							</td>
+						</tr>
+						
+						
+						
+						</tbody>
+					</table>
+				</div>
+				<div class="d-block text-center card-footer">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+</section>
+
+
+</body>
+</html>

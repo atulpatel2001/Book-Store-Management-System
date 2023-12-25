@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{manager/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<section>
+	
+	<div class="container text-center loader" style="display:none;">
+		<span class="fa fa-refresh fa-spin fa-4x" ></span>
+	</div>
+	<!-- Card stats -->
+	<div class="row g-6 mb-6">
+		
+		<div class="col-xl-3 col-sm-6 col-12">
+			<div class="card shadow border-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+            <span
+					class="h6 font-semibold text-muted text-sm d-block mb-2"
+			>Staff</span
+			>
+							<span class="h3 font-bold mb-0" th:text="${numberOfStaff}">$750.90</span>
+						</div>
+						<div class="col-auto">
+							<div
+									class="icon icon-shape bg-tertiary text-white text-lg rounded-circle"
+							>
+								<i class="fa fa-users"></i>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 mb-0 text-sm">
+          <span
+				  class="badge badge-pill bg-soft-success text-success me-2"
+		  >
+          
+          </span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="col-xl-3 col-sm-6 col-12">
+			<div class="card shadow border-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+            <span
+					class="h6 font-semibold text-muted text-sm d-block mb-2"
+			>Pending Order</span
+			>
+							<span class="h3 font-bold mb-0" th:text="${pendingOrder}">215</span>
+						</div>
+						<div class="col-auto">
+							<div
+									class="icon icon-shape bg-primary text-white text-lg rounded-circle"
+							>
+								<i class="fas fa-shipping-fast"></i>
+							
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 mb-0 text-sm">
+          <span
+				  class="badge badge-pill bg-soft-success text-success me-2"
+		  >
+          
+          </span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="col-xl-3 col-sm-6 col-12">
+			<div class="card shadow border-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+            <span
+					class="h6 font-semibold text-muted text-sm d-block mb-2"
+			>Delivered Order</span
+			>
+							<span class="h3 font-bold mb-0" th:text="${deliveredOrder}">1.400</span>
+						</div>
+						<div class="col-auto">
+							<div
+									class="icon icon-shape bg-info text-white text-lg rounded-circle"
+							>
+								<i class="bi bi-clock-history"></i>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 mb-0 text-sm">
+          <span
+				  class="badge badge-pill bg-soft-danger text-danger me-2"
+		  >
+          
+          </span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="col-xl-3 col-sm-6 col-12">
+			<div class="card shadow border-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col">
+            <span
+					class="h6 font-semibold text-muted text-sm d-block mb-2"
+			>Book</span
+			>
+							<span class="h3 font-bold mb-0" th:text="${numberOfBook}">95%</span>
+						</div>
+						<div class="col-auto">
+							<div
+									class="icon icon-shape bg-warning text-white text-lg rounded-circle"
+							>
+								<i class="fa fa-book"></i>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 mb-0 text-sm">
+          <span
+				  class="badge badge-pill bg-soft-success text-success me-2"
+		  >
+          
+          </span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	
+	
+	
+	<div class="container">
+		
+		<div class="card shadow border-0 mb-7">
+			<div class="card-header">
+				<h5 class="mb-0">New Orders</h5>
+			</div>
+			
+			<!-- table start -->
+			<div class="table-responsive">
+				<table class="table table-hover table-nowrap">
+					<thead class="thead-light">
+					<tr>
+						<th scope="col">Book Name</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Order Date</th>
+						<th scope="col">Order Status</th>
+						<th scope="col">Staff Allocation</th>
+						<th scope="col"></th>
+						<th scope="col">Action</th>
+						
+						
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="order:${orders}"  th:if="${orders != null}">
+						
+						
+						<td>
+							<a class="text-heading font-semibold" >
+								<img style="height:70px;width:70px;" th:src="${order.book.bookImageUrl}" alt="image"/>
+								<p class="text-muted" style="font-size:10px;" th:text="${order.book.bookTitle}"></p>
+							</a>
+						
+						</td>
+						
+						<td th:text="${order.bookQuantity}" style="font-size:16px;font-width:30px">$3.500</td>
+						
+						
+						<td th:text="${order.orderDate}">
+						
+						</td>
+						
+						<td class="text-center">
+							<div class="wait-container" th:class="'wait-'+${order.orderId}" style="display:none;">
+								<h6>Please Wait...</h6>
+							</div>
+							<div class="form-group">
+								<label for="orderStatusSelect" class="visually-hidden">Order Status</label>
+								<select class="form-select change-status" id="orderStatusSelect" aria-label="Order Status" th:data-order-id="${order.orderId}">
+									<option selected th:text="${order.orderStatus}"></option>
+									<option value="1">SHIPPED</option>
+									<option value="2">OUT OF DELIVERY</option>
+								</select>
+							</div>
+						</td>
+						
+						
+						<td>
+							<a href="#"  class="btn btn-sm btn-neutral"  th:data-bs-target="'#exampleModal-'+${order.orderId}" data-bs-toggle="modal"><i class="fa fa-tasks" aria-hidden="true"></i></a>
+						<td>
+						
+						<td >
+							<a href="#" th:href="@{'/manager/'+${order.orderId}+'/order-detail'}"  class="btn btn-sm btn-neutral" >View</a>
+						</td>
+						
+						
+<!--						modal start-->
+						
+						
+						<!-- Modal -->
+						<div class="modal fade right"  th:id="'exampleModal-'+${order.orderId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-5">
+												<img th:src="${order.book.bookImageUrl}"
+													 class="img-fluid" alt="">
+											</div>
+											
+											<div class="col-7">
+												<p>Order Id :-<strong th:text="${order.orderId}"></strong></p>
+												<p>Book Title :-<strong th:text="${order.book.bookTitle}"></strong></p>
+												
+												
+												<p class="mt-5" style="width:bold;"> Select Staff For Order:-</p>
+												<form th:action="@{/manager/assign-order}" method="post">
+													
+														<input type="hidden" th:value="${order.orderId}" name="orderId">
+														<div class="mb-3">
+															
+															<select class="form-select form-select-sm" name="empId" required>
+																<option selected>Select Staff</option>
+																<option th:each="staff : ${staffs}" th:value="${staff.employeeId}" th:text="${staff.customer.customerName}" ></option>
+															</select>
+														</div>
+													<div class="text-center">
+													<button type="submit" class="btn btn-outline-success btn-sm ">Assign</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									
+										
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+<!--						modal end-->
+						
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- table end -->
+			
+			
+			<div class="card-footer  py-5">
+			
+			
+			
+			</div>
+		
+		
+		
+		</div>
+	</div>
+	
+	
+	
+	
+
+</section>
+
+
+</body>
+</html>

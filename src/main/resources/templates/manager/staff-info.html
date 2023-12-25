@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{manager/_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="container " style="margin-top:70px;">
+		<div class="card text-center ">
+			
+			<div class="card-header primary-bg" >
+				<h3 style="color:white">Employee</h3>
+			</div>
+			
+			<div class="card-body">
+				<table class="table"  th:if="${employee != null and employee.customer != null}">
+					
+					<tbody >
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Name :</th>
+						<td th:text="${employee.customer.customerName}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Email Id :</th>
+						<td th:text="${employee.customer.customerEmailId}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Phone Number :</th>
+						<td th:text="${employee.employeePhoneNumber}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Salary :</th>
+						<td th:text="${employee.employeeSalary}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">State :</th>
+						<td th:text="${employee.customer.address.state}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">District :</th>
+						<td th:text="${employee.customer.address.district}" style="font-size:16px;font-width:30px">/td>
+					
+					</tr>
+					
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">City:</th>
+						<td th:text="${employee.customer.address.city}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Pincode:</th>
+						<td th:text="${employee.customer.address.pinCode}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Role:</th>
+						<td th:text="${employee.customer.customerRole}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					<tr>
+						<th scope="row" style="font-size:16px;font-width:30px">Book AddDate:</th>
+						<td th:text="${employee.customer.customerJoinDate}" style="font-size:16px;font-width:30px">/td>
+					</tr>
+					
+					</tbody>
+				</table>
+				<div class="mt-2">
+					
+					<button
+							type="button"
+							class="btn btn-sm btn-square btn-neutral text-danger-hover delete-staff"
+							id="delete-staff" th:data-staff_id="${employee.employeeId}"
+					>
+						<i class="bi bi-trash"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+</body>
+</html>

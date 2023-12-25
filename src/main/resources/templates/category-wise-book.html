@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{_layout::Layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="m-4">
+		<div class="new-book" th:if="${books != null and not #lists.isEmpty(books)}">
+			
+			<h1 class="title-shop m-3" id="title" th:text="${categoryTitle}+' Books'">Books</h1>
+			<main class="main bd-grid">
+				
+				<article class="card1" th:each="book:${books}" style="width:255px;height:400px;">
+					<div class="card1__img">
+						<img th:src="${book.bookImageUrl}" class="img1" alt="" style="height:225px;">
+					</div>
+					<div class="card1__name">
+						<p th:text="${book.bookAuthor}">AIR ZOOM PEGASUS</p>
+					</div>
+					<div class="card1__precis ">
+						<a  class="card1__icon ml-3" th:href="@{'/'+${book.bookId}+'/book-detail'}">
+							<i class="fa fa-eye"></i>
+						</a>
+						
+						<div>
+							<span class="card1__preci card1__preci--before" th:text="${book.bookTitle}">$990.00</span>
+							<span class="card1__preci card1__preci--now" th:text="'$'+${book.bookPrice}">$749.00</span>
+						</div>
+						<a th:href="@{/signin}" class="card1__icon mr-3">
+							<ion-icon name="cart-outline"></ion-icon>
+						</a>
+					
+					</div>
+				
+				</article>
+			
+			
+			</main>
+		
+		
+		
+		</div>
+	</div>
+</section>
+</body>
+</html>

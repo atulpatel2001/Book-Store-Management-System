@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{manager/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	<div class="container">
+		
+		<div class="card shadow border-0 mb-7">
+			<div class="card-header">
+				<h5 class="mb-0">All Order</h5>
+			</div>
+			
+			<!-- table start -->
+			<div class="table-responsive">
+				<table class="table table-hover table-nowrap">
+					<thead class="thead-light">
+					<tr>
+						<th>Order Status</th>
+						<th scope="col">Book Name</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Price</th>
+						<th scope="col">Staff Allocation</th>
+						
+						<th>Action</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="order:${orders}" th:if="${orders != null}">
+						<td>
+							<div class="icon icon-shape alert-danger text-sm rounded-circle"
+								 th:if="${order.orderStatus == 'CONFIRMED' || order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY' }">
+								<i class="fa fa-circle-o"></i>
+							</div>
+							<div class="icon icon-shape  alert-success text-sm rounded-circle"
+								 th:if="${order.orderStatus == 'DELIVERED'}">
+								<i class="fa fa-circle-o"></i>
+							</div>
+						</td>
+						<td>
+							
+							<a class="text-heading font-semibold" style="font-size:16px;font-width:30px">
+								<img style="height:70px;width:70px;" th:src="${order.book.bookImageUrl}" alt="image"/>
+								<p class="text-muted" th:text="${order.book.bookTitle}"></p>
+							</a>
+						
+						</td>
+						
+						<td th:text="${order.bookQuantity}" style="font-size:16px;font-width:30px">$3.500</td>
+						
+						<td>
+								<span class="text-heading " href="#" th:text="'$'+${order.book.bookPrice}"
+									  style="font-size:16px;font-width:30px">
+									Dribbble
+								</span>
+						</td>
+						
+						<td style="font-size:16px;font-width:30px">
+							<p th:text="${order.employee.customer.customerName}"></p><a
+								th:if="${order.orderStatus != 'DELIVERED'}" style="pointer:cursor"
+								th:data-bs-target="'#exampleModal-'+${order.orderId}" data-bs-toggle="modal"><i
+								class="fas fa-edit fa-1x"></i></a>
+						</td>
+						
+						<td>
+							<a href="#" th:href="@{'/manager/'+${order.orderId}+'/order-detail'}"
+							   class="btn btn-sm btn-neutral">View</a>
+						</td>
+						
+						
+						<!-- Modal -->
+						<div class="modal fade right" th:id="'exampleModal-'+${order.orderId}" tabindex="-1"
+							 aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Change Staff</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-5">
+												<img th:src="${order.book.bookImageUrl}"
+													 class="img-fluid" alt="">
+											</div>
+											
+											<div class="col-7">
+												<p>Order Id :-<strong th:text="${order.orderId}"></strong></p>
+												<p>Book Title :-<strong th:text="${order.book.bookTitle}"></strong></p>
+												
+												
+												<p class="mt-5" style="width:bold;"> Select Staff For Order:-</p>
+												<form th:action="@{/manager/assign-order}" method="post">
+													
+													<input type="hidden" th:value="${order.orderId}" name="orderId">
+													<div class="mb-3">
+														
+														<select class="form-select form-select-sm" name="empId"
+																required>
+															<option selected
+																	th:text="${order.employee.customer.customerName}"></option>
+															<option th:each="staff : ${staffs}"
+																	th:value="${staff.employeeId}"
+																	th:text="${staff.customer.customerName}"></option>
+														</select>
+													
+													</div>
+													<div class="text-center">
+														<button type="submit" class="btn btn-outline-success btn-sm ">
+															Assign
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									
+									
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!--						modal end-->
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- table end -->
+			
+			
+			<div class="card-footer  py-5">
+				<nav aria-label="Page navigation example" th:if="${totalPages>0}" style="color:black">
+					<ul class="pagination">
+						<li class="page-item border" th:if="${currentPage != 0 }">
+							<a class="page-link" href="#" aria-label="Previous"
+							   th:href="@{'/manager/manage-order/' + ${currentPage - 1}}">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}" style="color:black"
+							th:classappend="${currentPage == i-1 ? 'active' : ''}"><a
+								class="page-link" href="#" th:href="@{'/manager/manage-order/' + ${i-1}}"
+								th:text="${i}">1</a></li>
+						
+						<li class="page-item  border" th:if="${currentPage + 1 != totalPages}" style="color:black">
+							<a class="page-link" href="#" aria-label="Next"
+							   th:href="@{'/manager/manage-order/' + ${currentPage + 1}}">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		
+		
+		</div>
+	</div>
+</section>
+</body>
+</html>

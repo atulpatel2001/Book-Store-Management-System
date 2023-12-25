@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{customer/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<section>
+	<div class="container text-center" id="loader" style="display:none;">
+		<span class="fa fa-refresh fa-spin fa-4x" ></span>
+	</div>
+	<section class="h-100 h-custom">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12">
+					<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+						<div class="card-body p-0">
+							<div class="row g-0">
+								<div class="col-lg-8">
+									<div class="p-5">
+										<div class="d-flex justify-content-between align-items-center mb-5">
+											<h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+											<h6 class="mb-0 text-muted" th:text="'Total Cart : '+${countCart}">total cart </h6>
+										</div>
+										<div class="text-center" th:if="${customer.address == null}"><p class="text-muted" style="color: red;font-weight:bold;">First Add Address After By a Books</p></div>
+										   <hr class="my-4">
+										
+										
+										<div class="row mb-4 d-flex justify-content-between align-items-center" th:each="cart: ${carts}">
+											<div class="col-md-2 col-lg-2 col-xl-2">
+												<img th:src="${cart.book.bookImageUrl}" class="img-fluid rounded-3" alt="Book Image">
+											</div>
+											<div class="col-md-3 col-lg-3 col-xl-3">
+												<h6 class="text-muted">Book</h6>
+												<h6 class="text-black mb-0" th:text="${cart.book.bookTitle}">Book Title</h6>
+												
+												<div class="mt-2" style="font-width:bold;font-size:12px;color:red;" th:if="${ cart.book.bookQuantity gt 0 and cart.book.bookQuantity le 5}">
+													<h6 th:text="'Only ' + ${cart.book.bookQuantity} + ' Books Left !!!'"></h6>
+												</div>
+												
+												<div class="mt-2" style="font-width:bold;font-size:12px;color:red;" th:if="${ cart.book.bookQuantity le 0 }">
+													<h6 > Book is out of Stock ..</h6>
+												</div>
+											
+											
+											</div>
+											<div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+												
+													<button class="btn btn-link px-2"  th:onclick="adjustQuantity(-1, /*[[${cart.cartId}]]*/)">
+														<i class="fas fa-minus"></i>
+													</button>
+													<input th:id="'form' + ${cart.cartId}" min="0" name="quantity" th:value="${cart.itemQuantity}" type="number" class="form-control form-control-sm" />
+													<button class="btn btn-link px-2" th:onclick="adjustQuantity(1, /*[[${cart.cartId}]]*/)">
+														<i class="fas fa-plus"></i>
+													</button>
+											</div>
+											<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+												<h6 class="mb-0" th:text="${cart.book.bookPrice}">€ 44.00</h6>
+											</div>
+											
+											
+											<div class="col-md-1 col-lg-1 col-xl-1 text-end">
+												<button  class="btn btn-outline-danger btn-sm delete-cart mb-1 mr-1" th:data-cart_id="${cart.cartId}" style=" cursor: pointer;">Remove</button>
+												
+												<div th:if="${customer.address != null}">
+													<div th:if="${cart.itemQuantity le cart.book.bookQuantity}">
+												<button th:if="${cart.book.bookQuantity ne 0 }" class="btn btn-outline-secondary btn-sm m-1" th:onclick="singleBookPayment(/*[[${cart.book.bookId}]]*/,/*[[${cart.book.bookPrice}]]*/,/*[[${cart.itemQuantity}]]*/)" style="width:70px;">Buy</button>
+													</div>
+													</div>
+											</div>
+											
+											
+											
+										
+											
+										</div>
+										
+										
+										
+										
+										<hr class="my-4">
+										
+										
+										<div class="pt-5">
+											<h6 class="mb-0"><a th:href="@{/purchase-book}" class="text-body"><i
+													class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+										</div>
+										
+										
+									</div>
+								</div>
+								<div class="col-lg-4 bg-grey">
+									<div class="p-5">
+										<h3 class="fw-bold mb-5 mt-2 pt-1">Price Detail</h3>
+										<hr class="my-4">
+										
+										<div class="d-flex justify-content-between mb-4">
+											<h5 class="text-uppercase" th:text="'Items : '+${countCart}">Items : 12</h5>
+											<h5>total value</h5>
+										</div>
+										
+										<div class="d-flex justify-content-between mb-4">
+											<h5 >Delivery Charges :-</h5>
+											<h5>FREE Delivery</h5>
+										</div>
+										
+										<hr class="my-4">
+										
+										<div class="d-flex justify-content-between mb-5">
+											<h5 class="text-uppercase">Total price</h5>
+											<h5 th:text="'$'+${totalPrice}">45555</h5>
+										</div>
+										
+										<div class="d-flex justify-content-between mb-5" th:if="${customer.address == null}">
+											<button class=" add-staff-button btn d-inline-flex btn-sm btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                             <span class="pe-2">
+                                                                   <i class="fa fa-plus"></i>
+                                                                                </span>
+											                         	<span>Add Address</span>
+											                            </button>
+										</div>
+										
+										
+<!--										add address modal-->
+										
+										
+										<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="staticBackdropLabel">Add Address</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														
+													</div>
+													
+													
+													
+													<div class="modal-body">
+														<form id="reg-form" th:action="@{/purchase-book/add-address}" method="POST">
+														<div class="form-group">
+															<label for="customerName">Name</label>
+															<input name="fullName" type="text" class="form-control" id="customerName"
+																   aria-describedby="emailHelp" placeholder="Enter Name" required>
+														</div>
+														
+														
+														
+														<div class="form-group">
+															<label for="employeePhoneNumber">PhoneNumber</label>
+															<input name="phoneNumber" type="number" class="form-control" id="employeePhoneNumber"
+																   aria-describedby="emailHelp" placeholder="Enter PhoneNumber" required>
+														</div>
+														
+														
+														
+														
+														<div class="form-group">
+															<label for="state">State</label>
+															<input name="state" type="text" class="form-control" id="state"
+																   aria-describedby="emailHelp" placeholder="Enter State" required>
+														</div>
+														
+														<div class="form-group">
+															<label for="district">District</label>
+															<input name="district" type="text" class="form-control" id="district"
+																   aria-describedby="emailHelp" placeholder="Enter District" required>
+														</div>
+														
+														
+														<div class="form-group">
+															<label for="city">City</label>
+															<input name="city" type="text" class="form-control" id="city"
+																   aria-describedby="emailHelp" placeholder="Enter City" required>
+														</div>
+														
+														<div class="form-group">
+															<label for="employeeSalary">PinCode</label>
+															<input name="pinCode" type="number" class="form-control" id="employeeSalary"
+																   aria-describedby="emailHelp" placeholder="Enter Pincode" required>
+														</div>
+														
+														
+														
+														<div class="form-group">
+															<label for="houseNo">House No</label>
+															<input name="houseNo" type="text" class="form-control" id="houseNo"
+																   aria-describedby="emailHelp" placeholder="Enter House No" required>
+														</div>
+														
+														<div class="form-group">
+															<label for="buildingName">Building Name</label>
+															<input name="buildingName" type="text" class="form-control" id="buildingName"
+																   aria-describedby="emailHelp" placeholder="Enter Colony" required>
+														</div>
+														
+														
+														<div class="form-group">
+															<label for="area">Area</label>
+															<input name="area" type="text" class="form-control" id="area"
+																   aria-describedby="emailHelp" placeholder="Enter Area" required>
+														</div>
+														
+														
+														<div class="form-group">
+															<label for="colony">Colony</label>
+															<input name="colony" type="text" class="form-control" id="colony"
+																   aria-describedby="emailHelp" placeholder="Enter Colony" required>
+														</div>
+														
+														<div class="container text-center mt-3">
+															<button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+															<button type="reset" class="btn btn-warning" id="reset-btn">Reset</button>
+														</div>
+														</form>
+													
+													</div>
+													
+													
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+													
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										
+										
+										
+										
+										
+										<div class="justify-content-between mb-5" th:if="${customer.address != null}">
+											<p>Name: <span th:text="${customer.address.fullName}"></span></p>
+											<p>PhoneNumber: <span th:text="${customer.address.phoneNumber}"></span></p>
+											<p>State: <span th:text="${customer.address.state}"></span></p>
+											<p>District: <span th:text="${customer.address.district}"></span></p>
+											<p>City: <span th:text="${customer.address.city}"></span></p>
+											<p>Pincode: <span th:text="${customer.address.pinCode}"></span></p>
+											<p>HouseNo: <span th:text="${customer.address.houseNo}"></span></p>
+											<p>BuildingName: <span th:text="${customer.address.buildingName}"></span></p>
+											<p>Area: <span th:text="${customer.address.area}"></span></p>
+											<p>Colony: <span th:text="${customer.address.colony}"></span></p>
+											<button class="btn d-inline-flex btn-sm btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                                             <span class="pe-2">
+                                                                   <i class="far fa-edit"></i> Update Address
+                                                                                </span>
+											</button>
+											
+											
+<!--											update modal-->
+											
+											<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="staticBackdropLabel1">Update Address</h5>
+															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														
+														
+														
+														<div class="modal-body">
+															<form id="reg-form2" th:action="@{/purchase-book/update-address}" method="POST">
+																<input type="hidden" th:value="${customer.address.addressId}" name="addressId">
+																<div class="form-group">
+																	<label for="customerName1">Name</label>
+																	<input name="fullName" type="text" class="form-control" id="customerName1"
+																		   th:value="${customer.address.fullName}"
+																		   aria-describedby="emailHelp" placeholder="Enter Name" required>
+																</div>
+																
+																
+																
+																<div class="form-group">
+																	<label for="employeePhoneNumber2">PhoneNumber</label>
+																	<input name="phoneNumber" type="number" class="form-control" id="employeePhoneNumber2"
+																		   th:value="${customer.address.phoneNumber}"
+																		   aria-describedby="emailHelp" placeholder="Enter PhoneNumber" required>
+																</div>
+																
+																
+																
+																
+																<div class="form-group">
+																	<label for="state2">State</label>
+																	<input name="state" type="text" class="form-control" id="state2"
+																		   th:value="${customer.address.state}"
+																		   aria-describedby="emailHelp" placeholder="Enter State" required>
+																</div>
+																
+																<div class="form-group">
+																	<label for="district1">District</label>
+																	<input name="district" type="text" class="form-control" id="district1"
+																		   th:value="${customer.address.district}"
+																		   aria-describedby="emailHelp" placeholder="Enter District" required>
+																</div>
+																
+																
+																<div class="form-group">
+																	<label for="city1">City</label>
+																	<input name="city" type="text" class="form-control" id="city1"
+																		   th:value="${customer.address.city}"
+																		   aria-describedby="emailHelp" placeholder="Enter City" required>
+																</div>
+																
+																<div class="form-group">
+																	<label for="employeeSalary1">PinCode</label>
+																	<input name="pinCode" type="number" class="form-control" id="employeeSalary1"
+																		   th:value="${customer.address.pinCode}"
+																		   aria-describedby="emailHelp" placeholder="Enter Pincode" required>
+																</div>
+																
+																
+																
+																<div class="form-group">
+																	<label for="houseNo1">House No</label>
+																	<input name="houseNo" type="text" class="form-control" id="houseNo1"
+																		   th:value="${customer.address.houseNo}"
+																		   aria-describedby="emailHelp" placeholder="Enter House No" required>
+																</div>
+																
+																<div class="form-group">
+																	<label for="buildingName1">Building Name</label>
+																	<input name="buildingName" type="text" class="form-control" id="buildingName1"
+																		   th:value="${customer.address.buildingName}"
+																		   aria-describedby="emailHelp" placeholder="Enter Building Name" required>
+																</div>
+																
+																
+																<div class="form-group">
+																	<label for="area">Area</label>
+																	<input name="area" type="text" class="form-control" id="area"
+																		   th:value="${customer.address.state}"
+																		   aria-describedby="emailHelp" placeholder="Enter Area" required>
+																</div>
+																
+																
+																<div class="form-group">
+																	<label for="colony1">Colony</label>
+																	<input name="colony" type="text" class="form-control" id="colony1"
+																		   th:value="${customer.address.colony}"
+																		   aria-describedby="emailHelp" placeholder="Enter Colony" required>
+																</div>
+																
+																<div class="container text-center mt-3">
+																	<button type="submit" class="btn btn-primary" id="submit-btn1">Submit</button>
+																	<button type="reset" class="btn btn-warning" id="reset-btn1">Reset</button>
+																</div>
+															</form>
+														
+														</div>
+														
+														
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+														
+														</div>
+													</div>
+												</div>
+											</div>
+											
+<!--											end modal-->
+										</div>
+										
+										
+										
+<!--										<button type="button" class="btn btn-dark btn-block btn-lg"-->
+<!--												data-mdb-ripple-color="dark" onclick="allPayment()">CheckOut</button>-->
+									
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>
+</body>
+</html>

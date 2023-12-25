@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{customer/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="container" style="margin-left: 0; max-width: 100%;">
+		
+		<div class="col-lg-8 border p-3 main-section bg-white mx-auto">
+			
+			<div class="row hedding m-0 pl-3 pt-0 pb-3">
+				<h3 class="text-center" th:text="${book.bookTitle}" style="font-style: italic; font-weight: bold;"></h3>
+			</div>
+			
+			<div class="row m-0">
+				<div class="col-lg-4 left-side-product-box pb-3">
+					<img th:src="${book.bookImageUrl}" class="border p-3 img-fluid">
+					<span class="sub-img"></span>
+				</div>
+				<div class="col-lg-8">
+					<div class="right-side-pro-detail border p-3 m-0">
+						<div class="row">
+							<div class="col-lg-12">
+								<p class="m-2 p-0" th:text="'Book Title : '+${book.bookTitle}">Women's Velvet Dress</p>
+							</div>
+							<div class="col-lg-12">
+								<p class="m-2 p-0" th:text="'Book Author : '+${book.bookAuthor}">Women's Velvet Dress</p>
+							</div>
+							<div class="col-lg-12">
+								<p class="m-2 p-0" th:text="'Book ISBN : '+${book.bookISBN}">Women's Velvet Dress</p>
+							</div>
+							<div class="col-lg-12">
+								<p class="m-2 p-0 price-pro" th:text="'Book Price : $'+${book.bookPrice}">$30</p>
+								<hr class="p-0 m-0">
+							</div>
+							<div class="col-lg-12 pt-2">
+								<h5>Book Detail</h5>
+								<span th:text="${book.discription}">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud exercitation ullamco laboris.</span>
+								<hr class="m-0 pt-2 mt-2">
+							</div>
+							<div class="col-lg-12 mt-3">
+								<div class="row">
+									<div class="col-lg-6 pb-2">
+										<a th:href="@{/signin}" class="btn btn-danger w-100">Add To Cart</a>
+									</div>
+									<div class="col-lg-6">
+										<a th:href="@{/signin}" class="btn btn-success w-100">Shop Now</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	
+	</div>
+</section>
+</body>
+</html>

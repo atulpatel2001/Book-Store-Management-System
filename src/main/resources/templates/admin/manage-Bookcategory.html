@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<section>
+	
+	
+	
+	<main class="p-5 banner-background" style="padding-bottom: 80px">
+		<div class="container">
+			
+			<div class="m-3">
+				<button type="button" class="add-category-button">
+					<i class="fa fa-plus"></i>
+				</button>
+				<span class="text-muted">Add Category</span>
+				<button type="button" class="show-category-button ml-4">
+					<i class="fa fa-eye" aria-hidden="true"></i>
+				</button>
+				<span class="text-muted">Show Category</span>
+				
+				<div class="search-wrapper">
+					<form>
+						<input type="text" id="search-book-category" class="search-box" placeholder="Enter search term" onkeyup="searchBookCategory()" />
+						<button class="close-icon" type="reset"></button>
+					</form>
+				</div>
+				
+				<div class="search-result-book-category mt-3"></div>
+			</div>
+			
+			<!-- show category-->
+			<div class="row show-category">
+				<div class="">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title text-uppercase mb-0">
+								Manage Book Category
+							</h5>
+						</div>
+						<div class="table-responsive">
+							<table class="table no-wrap user-table mb-0">
+								<thead>
+								<tr>
+									<th
+											scope="col"
+											class="border-0 text-uppercase font-medium pl-4"
+									
+									>
+										ID
+									</th>
+									<th
+											scope="col"
+											class="border-0 text-uppercase font-medium"
+									>
+										CategoryTitle
+									</th>
+									<th
+											scope="col"
+											class="border-0 text-uppercase font-medium"
+									>
+										AddDate
+									</th>
+									<th
+											scope="col"
+											class="border-0 text-uppercase font-medium"
+									>
+										Action
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr th:each="category:${categories}">
+									<td class="pl-4" th:text="'#BOOK-CATEGORY' + ${category.categoryId}">1</td>
+									<td>
+										<h5 class="font-medium mb-0" th:text="${category.categoryTitle}">Daniel
+											Kristeen</h5>
+									</td>
+									<td>
+										<div class="text-muted" th:text="${category.categoryAddDate}">45-89-96</div>
+										<br/>
+									</td>
+									
+									<td>
+										<button
+												type="button"
+												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-category"
+												id="delete-category" th:data-category_id="${category.categoryId}"
+										>
+											<i class="fa fa-trash"></i>
+										</button>
+										<button
+												type="button"
+												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"
+												data-bs-toggle="modal" th:data-bs-target="'#exampleModal-'+ ${category.categoryId}"
+										>
+											<i class="fa fa-edit"></i>
+										</button>
+									
+									</td>
+									
+									<!--update category-->
+									
+									<!-- Modal -->
+									<div
+											class="modal fade"
+											id="exampleModal"
+											th:id="'exampleModal-'+${category.categoryId}"
+											tabindex="-1"
+											aria-labelledby="exampleModalLabel"
+											aria-hidden="true"
+									>
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1
+															class="modal-title fs-5"
+															id="exampleModalLabel"
+													>
+														Modal title
+													</h1>
+													<button
+															type="button"
+															class="btn-close"
+															data-bs-dismiss="modal"
+															aria-label="Close"
+													></button>
+												</div>
+												<div class="modal-body">
+													<form
+															id="re-form"
+															th:action="@{/admin/update-categoryData}"
+															method="POST"
+													>
+														<input type="hidden" name="categoryId"
+															   th:value="${category.categoryId}"/>
+														<div class="form-group">
+															<label for="categoryTite">Category Title</label>
+															<input
+																	name="categoryTitle"
+																	type="text"
+																	class="form-control"
+																	id="categoryTite"
+																	aria-describedby="emailHelp"
+																	th:value="${category.categoryTitle}"
+																	required
+															/>
+														</div>
+														
+														<div class="form-group">
+															<label for="categoryDiscriptin">Book Description</label>
+															<textarea
+																	name="categoryDiscription"
+																	class="form-control"
+																	id="categoryDiscriptin"
+																	rows="10"
+																	placeholder="Enter Something About Book Category"
+																	th:text="${category.categoryDiscription}"
+															></textarea>
+														</div>
+														
+														<div class="container text-center mt-3">
+															<button
+																	type="submit"
+																	class="btn btn-primary"
+																	id="sbmit-btn"
+															>
+																Submit
+															</button>
+															<button
+																	type="reset"
+																	class="btn btn-warning"
+																	id="eset-btn"
+															>
+																Reset
+															</button>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button
+															type="button"
+															class="btn btn-secondary"
+															data-bs-dismiss="modal"
+													>
+														Close
+													</button>
+												
+												</div>
+											</div>
+										</div>
+									</div>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						
+						<!-- pagination -->
+						
+						<nav aria-label="Page navigation example text-center" th:if="${totalPages>0}" style="color:black">
+							<ul class="pagination">
+								<li class="page-item border" th:if="${currentPage != 0 }">
+									<a class="page-link" href="#" aria-label="Previous"
+									   th:href="@{'/admin/manage-category/' + ${currentPage - 1}}">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li th:each="i : ${#numbers.sequence(1, totalPages)}" style="color:black"
+									th:classappend="${currentPage == i-1 ? 'active' : ''}"><a
+										class="page-link" href="#" th:href="@{'/admin/manage-category/' + ${i-1}}"
+										th:text="${i}">1</a></li>
+								
+								<li class="page-item  border" th:if="${currentPage + 1 != totalPages}" style="color:black">
+									<a class="page-link" href="#" aria-label="Next"
+									   th:href="@{'/admin/manage-category/' + ${currentPage + 1}}">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			
+			<!--			add category-->
+			<div
+					class="col-md-5 offset-md-4"
+					style="display: none"
+					id="add-category"
+			>
+				<div class="card mt-3">
+					<div class="card-header text-center primary-bg text-white">
+						<span class="fa fa-3x fa-user-circle"></span>
+						<br/>
+						Add Category
+					</div>
+					
+					<div class="card-body">
+						<form
+								id="reg-form"
+								th:action="@{/admin/add-categoryData}"
+								method="POST"
+						>
+							<div class="form-group">
+								<label for="categoryTitle">Category Title</label>
+								<input
+										name="categoryTitle"
+										type="text"
+										class="form-control"
+										id="categoryTitle"
+										aria-describedby="emailHelp"
+										placeholder="Enter Book Category Title"
+										required
+								/>
+							</div>
+							
+							<div class="form-group">
+								<label for="categoryDiscription">Book Description</label>
+								<textarea
+										name="categoryDiscription"
+										class="form-control"
+										id="categoryDiscription"
+										rows="10"
+										placeholder="Enter Something About Book Category"
+								></textarea>
+							</div>
+							
+							<div class="container text-center mt-3">
+								<button type="submit" class="btn btn-primary" id="submit-btn">
+									Submit
+								</button>
+								<button type="reset" class="btn btn-warning" id="reset-btn">
+									Reset
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+</section>
+</body>
+</html>

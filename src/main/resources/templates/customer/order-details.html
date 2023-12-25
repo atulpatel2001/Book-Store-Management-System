@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{customer/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<h1 class="text-center">Order Details</h1>
+	<div class="maina">
+		
+		<div class="carda">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-3" style="font-size:15px">
+						<p style="font-size:17px">Delivery Address</p>
+						<p th:text="${order.customer.address.fullName}"></p>
+						<p th:text="${order.customer.address.phoneNumber}"></p>
+						<p th:text="${order.customer.address.state}"></p>
+					    <p th:text="${order.customer.address.district}"></p>
+						
+					</div>
+					<div class="col-md-3 " style="font-size:15px">
+						<p></p>
+					<p th:text="${customer.address.city}"></p>
+						
+						<p th:text="${customer.address.pinCode}"></p>
+						<p th:text="${customer.address.houseNo}"></p>
+						 <p th:text="${customer.address.buildingName}"></p>
+						<p th:text="${customer.address.area}"></p>
+						<p th:text="${customer.address.colony}"></p>
+					</div>
+					
+					<div class="col-md-4" style="font-size:15px">
+					<span><i class="fas fa-file-invoice fa-2x mr-1"></i >Download Invoice</span>
+						<div class="mt-5"  th:if="${ order.orderStatus == 'CONFIRMED' || order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY'}">
+						<span ><i class="fa fa-close fa-2x mr-1"></i>Cancel Order</span>
+						</div>
+					</div>
+					
+					<div class="col-md-2" style="font-size:15px">
+						<a th:href="@{'/purchase-book/'+${order.orderId}+'/download-invoice'}" > Download </a>
+					<div class="mt-5" th:if="${ order.orderStatus == 'CONFIRMED' || order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY'}">
+						<a   th:href="@{'/purchase-book/'+${order.orderId}+'/cancel-order'}"> Cancel </a>
+					</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="carda">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-1" style="font-size:15px">
+						<img th:src="${order.book.bookImageUrl}" style="height:130px;width:70px;">
+					
+					</div>
+					<div class="col-md-2" style="font-size:15px">
+						<p th:text="${order.book.bookTitle}"></p>
+						<p style="font-size:12px;" class="text-mute" th:text="${order.orderId}"></p>
+						
+						<p style="font-size:12px;" class="text-mute" th:text="${order.book.bookAuthor}"></p>
+						<p style="font-size:12px;" th:text="'Qty: '+${order.bookQuantity}"></p>
+						<p style="font-size:12px;" th:text="'$'+${order.transaction.amount}"></p>
+					
+					</div>
+					<div class="col-md-6 mt-5">
+						
+<!--						start pogress bar-->
+						<div class="wrapper">
+							<div class="margin-area">
+								<div class="dot one">1</div>
+								<div class="dot two" th:style="${order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">2</div>
+								<div class="dot three" th:style="${order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">3</div>
+								<div class="dot four" th:style="${order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''">4</div>
+								
+								<div class="progress-bar first" th:style="${order.orderStatus == 'SHIPPED' || order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''"></div>
+								<div class="progress-bar second" th:style="${order.orderStatus == 'OUTOFDELIVERY' || order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''"></div>
+								<div class="progress-bar third" th:style="${order.orderStatus == 'DELIVERED'} ? 'background: #0C84D9;' :''" ></div>
+								<div class="message message-1">
+									Order Confirmed <span th:text="${order.orderDate}"></span>
+									<div>
+										<div class="message message-2" >Shipped <span th:text="${order.shippedDate}"></span><div>
+											<div class="message message-3">Out For Delivery   <span th:text="${order.outOfDeliveryDate}"></span><div><div>
+												<div class="message message-4">
+													Delivered   <span th:text="${order.deliveredDate}"></span><div>
+												
+												</div>
+												
+												</div>
+						
+						
+<!--						end pogress bar-->
+												
+												<div class="mt-3" th:if="${order.orderStatus == 'DELIVERED'}">
+													<span class="fa fa-star"><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> Rate & Review Product</a></span>
+													
+													<div id="feedback-form-modal">
+														<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title" id="exampleModalLabel">Give FeedBack</h5>
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																			<span aria-hidden="true">&times;</span>
+																		</button>
+																	</div>
+																	<div class="modal-body">
+																		<form th:action="@{/purchase-book/feedback-data}" method="post">
+																			<input type="text" name="bookId" th:value="${order.book.bookId}" hidden="hidden">
+																			<div class="form-group">
+																				<label>Rate this book</label>
+																				<div class="rating-input-wrapper d-flex justify-content-between mt-2">
+																					<label><input type="radio" name="rating" value="1" /><span class="border rounded px-3 py-2">1</span></label>
+																					<label><input type="radio" name="rating" value="2"/><span class="border rounded px-3 py-2">2</span></label>
+																					<label><input type="radio" name="rating" value="3" /><span class="border rounded px-3 py-2">3</span></label>
+																					<label><input type="radio" name="rating" value="4"/><span class="border rounded px-3 py-2">4</span></label>
+																					<label><input type="radio" name="rating" value="5"/><span class="border rounded px-3 py-2">5</span></label>
+																					<label><input type="radio" name="rating" value="6" /><span class="border rounded px-3 py-2">6</span></label>
+																					<label><input type="radio" name="rating" value="7"/><span class="border rounded px-3 py-2">7</span></label>
+																					<label><input type="radio" name="rating" value="8"/><span class="border rounded px-3 py-2">8</span></label>
+																					<label><input type="radio" name="rating" value="9"/><span class="border rounded px-3 py-2">9</span></label>
+																					<label><input type="radio" name="rating" value="10"/><span class="border rounded px-3 py-2">10</span></label>
+																				</div>
+																				<div class="rating-labels d-flex justify-content-between mt-1">
+																					<label>Very unlikely</label>
+																					<label>Very likely</label>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label for="input-two">Would you like to say something?</label>
+																				<textarea class="form-control" id="input-two" rows="3" name="description"></textarea>
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+																				<button type="submit" class="btn btn-primary">Submit</button>
+																			</div>
+																		</form>
+																	</div>
+																
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+					
+							
+												
+												
+												
+												
+					</div>
+					
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+</section>
+</body>
+</html>

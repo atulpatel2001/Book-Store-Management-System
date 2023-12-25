@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{staff/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	<!-- Main -->
+	<div class="maina">
+		<h2 class="text-center">ACCOUNT</h2>
+		<div class="carda">
+			<div class="card-body">
+				<div class="social-mediaa">
+                    <span class="fa-stack fa-sm" id="profile-button" style="cursor:pointer;">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-user-circle fa-stack-1x fa-inverse"></i>
+                    </span>
+					<span class="fa-stack fa-sm" id="change-pass-button"  style="cursor:pointer;">
+                        <i class="fas fa-circle fa-stack-2x" ></i>
+                        <i class="fa fa-key fa-stack-1x fa-inverse"></i>
+                    </span>
+				</div>
+			</div>
+		</div>
+		
+		
+<!--		profile page-->
+		<div id="staff-profile">
+		<h2 class="text-center">Profile</h2>
+		<div class="carda">
+			<div class="card-body">
+				<i class="fa fa-pen fa-xs edita edit-profile"  style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#profile-update"></i>
+				
+				<table class="profile-data-show">
+					<tbody>
+					<tr>
+						<td>Name</td>
+						<td>:</td>
+						<td th:text="${staff.customerName}"></td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td>:</td>
+						<td th:text="${staff.customerEmailId}">imdezcode@gmail.com</td>
+					</tr>
+					
+					<tr>
+						<td>Phone Number</td>
+						<td>:</td>
+						<td th:text="${staff.employee.employeePhoneNumber}">imdezcode@gmail.com</td>
+					</tr>
+					
+					<tr>
+						<td>Password</td>
+						<td>:</td>
+						<td>******************</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+<!--		profile update modal-->
+			<div class="modal fade" id="profile-update" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">Update Profile</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form th:action="@{/staff/update-profile}" method="post">
+								
+								<input type="hidden" name="customerId" th:value="${staff.customerId}">
+								
+								
+								
+								<div class="form-group pmd-textfield pmd-textfield-floating-label">
+									<label for="full-name">Name</label>
+									<input id="full-name" class="form-control" th:value="${staff.customerName}" type="text" name="customerName">
+								</div>
+								
+								
+								
+								<div class="form-group pmd-textfield pmd-textfield-floating-label">
+									<label for="email">Email Address</label>
+									<input type="email" th:value="${staff.customerEmailId}" class="mat-input form-control" id="email" value="" name="customerEmailId">
+								</div>
+								
+								
+								
+								<div class="form-group pmd-textfield pmd-textfield-floating-label">
+									<label for="email">PhoneNumber</label>
+									<input type="number" th:value="${staff.employee.employeePhoneNumber}" class="mat-input form-control" id="emailq" value="" name="employeePhoneNumber">
+								</div>
+								
+								<div class="text-center">
+								<button type="submit" class="btn btn-outline-success">update</button>
+								<button  class="btn btn-outline-secondary" type="reset">reset</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	
+<!--		profile page end-->
+
+<!--		change password-->
+	<div id="change-password" style="display:none;">
+		<h2 class="text-center">Change Password</h2>
+		<div class="carda">
+			<div class="card-body">
+				<form th:action="@{/staff/change-password}" method="post" style="margin:15px;">
+					<input type="hidden" name="customerId" th:value="${staff.customerId}">
+					<div class="mb-3">
+						<label for="exampleInputEmail1" class="form-label">Enter Password</label>
+						<input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="password1">
+					</div>
+					<div class="mb-3">
+						<label for="exampleInputPassword1" class="form-label">Retype Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword1" name="password2">
+					</div>
+					
+					<div class="text-center">
+					<button type="submit" class="btn btn-outline-success">Change Password</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	</div>
+</section>
+</body>
+</html>

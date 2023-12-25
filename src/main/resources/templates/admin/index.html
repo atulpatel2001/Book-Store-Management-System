@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	
+	
+	<!-- Dashboard -->
+	<div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+		
+		<!-- Main content -->
+		<div class="h-screen flex-grow-1 overflow-y-lg-auto">
+			
+			
+			<!-- Main -->
+			<main class="py-6 bg-surface-secondary">
+				<div class="container-fluid">
+					<!-- Card stats -->
+					<div class="row g-6 mb-6">
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Book</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfBook}">$750.90</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+												<i class="bi bi-book"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Staff</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfStaff}">215</span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+												<i class="bi bi-people"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Manager</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfManager}"></span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+												<i class="bi bi-people"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                  
+                                  </span>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-sm-6 col-12">
+							<div class="card shadow border-0">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Order</span>
+											<span class="h3 font-bold mb-0" th:text="${numberOfOrder}"></span>
+										</div>
+										<div class="col-auto">
+											<div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
+												<i class="fas fa-shipping-fast"></i>
+											</div>
+										</div>
+									</div>
+									<div class="mt-2 mb-0 text-sm">
+                                  <span class="badge badge-pill bg-soft-success text-success me-2">
+                                  
+                                  </span>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card shadow border-0 mb-7">
+						<div class="card-header">
+							<h5 class="mb-0">Active Customer</h5>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-hover table-nowrap">
+								<thead class="thead-light">
+								<tr>
+									<th scope="col" ></th>
+									<th scope="col">Customer Id</th>
+									<th scope="col">Name</th>
+									<th scope="col">Join Date</th>
+									<th scope="col">Role</th>
+								</tr>
+								</thead>
+								<tbody>
+								
+								<tr th:each="e:${loggedCustomer}">
+									<td>
+										<span class="badge badge-lg badge-dot">
+                                          <i class="bg-success"></i>
+                                      </span>
+									</td>
+									<td th:text="${e.customerId}">
+									
+									</td>
+									<td th:text="${e.customerName}">
+									
+									</td>
+									
+									<td th:text="${e.customerJoinDate}">
+										$3.500
+									</td>
+									
+									<td th:text="${e.customerRole}">
+										$3.500
+									</td>
+									
+									
+								</tr>
+								
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+	
+</section>
+</body>
+</html>

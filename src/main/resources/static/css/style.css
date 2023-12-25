@@ -1,0 +1,333 @@
+        @import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+
+.primary-bg{
+background:#424242;
+
+}
+.error{
+color:red;
+}
+
+/*top bar*/
+
+      @media (max-width: 768px) {
+        .topbar p {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .topbar p {
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+
+      .topbar {
+        text-transform: uppercase;
+        color: #da1f26;
+        font-weight: normal;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      .hover-effect1 {
+        min-height: 20px;
+        background: #f44336;
+        text-align: center;
+      }
+      .hover-effect1 ul {
+        padding-top: 1px;
+      }
+      .hover-effect1 ul li {
+        display: inline-block;
+      }
+      .hover-effect1 ul li a {
+        font-size: 30px;
+        text-align: center;
+        color: #fff;
+        margin: 0px 10px;
+        line-height: 50px;
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: #dc3545;
+        -webkit-transition: all 0.6s ease;
+        -moz-transition: all 0.6s ease;
+        -ms-transition: all 0.6s ease;
+        -o-transition: all 0.6s ease;
+        transition: all 0.6s ease;
+      }
+      .hover-effect1 ul li:hover a {
+        border-radius: 50%;
+        background: #dc3545;
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+
+
+
+
+
+/* index page card*/
+
+
+           :root{
+               --first-color: #E3F8FF;
+               --second-color: #DCFAFB;
+               --third-color: #FFE8DF;
+               --accent-color: #FF5151;
+               --dark-color: #161616;
+           }
+
+           /*Tipografia responsive*/
+           :root{
+               --body-font: 'Open Sans';
+               --h1-font-size: 1.5rem;
+               --h3-font-size: 1rem;
+               --normal-font-size: 0.938rem;
+               --smaller-font-size: 0.75rem;
+           }
+           @media screen and (min-width: 768px){
+               :root{
+                   --h1-font-size: 2rem;
+                   --normal-font-size: 1rem;
+                   --smaller-font-size: 0.813rem;
+               }
+           }
+
+           /*-- BASE --*/
+           *,::after,::before{
+               box-sizing: border-box;
+           }
+           body{
+
+               color: var(--dark-color);
+               font-family: var(--body-font);
+           }
+           #title{
+               font-size: var(--h1-font-size);
+           }
+           .img1{
+               max-width: 100%;
+               height: auto;
+           }
+           a{
+               text-decoration: none;
+           }
+
+           /*-- LAYAOUT --*/
+
+           .bd-grid{
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+               max-width: 1200px;
+               margin-left: 2.5rem;
+               margin-right: 2.5rem;
+               align-items: center;
+               gap: 2rem;
+           }
+
+           /*-- PAGES --*/
+           .title-shop{
+               position: relative;
+           	text-align: center;
+           }
+           .title-shop::after{
+               position: absolute;
+               top: 50%;
+               width: 72px;
+               height: 2px;
+               background-color: var(--dark-color);
+               margin-left: .25rem;
+           }
+
+           /*-- COMPONENT --*/
+           .card1{
+               position: relative;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+
+               border-radius: 1rem;
+               overflow: hidden;
+           }
+           article:nth-child(1){
+               background-color: var(--first-color);
+           }
+           article:nth-child(2){
+               background-color: var(--second-color);
+           }
+           article:nth-child(3){
+               background-color: var(--third-color);
+           }
+           article:nth-child(4){
+               background-color: var(--second-color);
+           }
+           .card1__img{
+               width: 180px;
+               height: auto;
+               padding: 3rem 0;
+               transition: .5s;
+           }
+           .card1__name{
+               position: absolute;
+               left: -25%;
+               top: 0;
+               width: 3.5rem;
+               height: 100%;
+               writing-mode: vertical-rl;
+               transform: rotate(180deg);
+               text-align: center;
+               background-color: var(--dark-color);
+               color: #fff;
+               font-weight: bold;
+               transition: .5s;
+           }
+           .card1__icon{
+               font-size: 1.5rem;
+               color: var(--dark-color);
+           }
+           .card1__icon:hover{
+               color: var(--accent-color);
+           }
+           .card1__precis{
+               width: 100%;
+               display: flex;
+               justify-content: space-between;
+               align-items: flex-end;
+               transition: .5s;
+           }
+           .card1__preci{
+               display: block;
+               text-align: center;
+           }
+           .card1__preci--before{
+               font-size: var(--smaller-font-size);
+               color: var(--accent-color);
+               margin-bottom: .25rem;
+           }
+           .card1__preci--now{
+               font-size: var(--h3-font-size);
+               font-weight: bold;
+           }
+           /*Move left*/
+           .card1:hover{
+               box-shadow: 0 .5rem 1rem #D1D9E6;
+           }
+           .card1:hover .card1__name{
+               left: 0;
+           }
+           .card1:hover .card1__img{
+               transform: rotate(30deg);
+               margin-left: 3.5rem;
+           }
+           .card1:hover .card1__precis{
+               margin-left: 3.5rem;
+               padding: 0 1.5rem;
+           }
+
+           /*-- FOOTER --*/
+
+           footer{
+             text-align: center;
+           }
+
+           /*-- MEDIA QUERIES --*/
+           @media screen and (min-width: 1200px){
+               body{
+                   margin: 3rem 0 0 0;
+               }
+               .title-shop{
+                   margin: 0 5rem;
+               }
+               .bd-grid{
+                   margin-left: auto;
+                   margin-right: auto;
+               }
+           }
+
+
+/* book detail */
+
+.left-side-product-box img {
+    width: 100%;
+}
+
+.left-side-product-box .sub-img img {
+    margin-top: 5px;
+    width: 83px;
+    height: 100px;
+}
+
+.right-side-pro-detail span {
+    font-size: 15px;
+}
+
+.right-side-pro-detail p {
+    font-size: 19px;
+    font-weight: bold; /* Corrected typo: font-width to font-weight */
+}
+
+.right-side-pro-detail .price-pro {
+    color: #E45641;
+}
+
+.right-side-pro-detail .tag-section {
+    font-size: 18px;
+    color: #5D4C46;
+}
+
+.pro-box-section .pro-box img {
+    width: 100%;
+    height: 200px;
+}
+
+/* Media query for screens between 360px and 640px */
+@media (min-width: 1025px) and (max-width: 640px) {
+    .pro-box-section .pro-box img {
+        height:100vh !important;
+    }
+
+    /* Add any additional styles or overrides for smaller screens here */
+}
+
+
+/*feedback*/
+
+ .containerfeed {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .paragraph-design {
+            color: #333;
+        }
+
+        .review {
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .review p {
+            margin: 0;
+        }
+
+        .review .user {
+            font-weight: bold;
+        }
+
+        .review .rating {
+            color: #f39c12;
+        }
+
+        .review .date {
+            color: #777;
+        }
+
